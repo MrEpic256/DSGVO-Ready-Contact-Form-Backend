@@ -1,172 +1,93 @@
-# 🔒 DSGVO-Ready Contact Form Backend
+# 🔒 GDPR/DSGVO Contact Form Backend
 
-A production-ready backend service for handling contact form submissions with **strict GDPR/DSGVO compliance**. Built for German clients who prioritize data protection and legal security (*rechtssicher*).
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-green.svg)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 📋 Table of Contents
+> **[🇬🇧 English](#english) | [🇩🇪 Deutsch](#deutsch)**
 
-- [Features](#-features)
-- [DSGVO Compliance](#-dsgvo-compliance)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [API Endpoints](#-api-endpoints)
-- [Environment Variables](#-environment-variables)
-- [Docker Deployment](#-docker-deployment)
-- [Data Retention Policy](#-data-retention-policy)
-- [Security Measures](#-security-measures)
+---
 
-## ✨ Features
+## 🇬🇧 English
 
-- ✅ **DSGVO-compliant data processing** with explicit consent validation
-- ✅ **IP anonymization** (last octet removal)
-- ✅ **Right to be Forgotten** (Recht auf Vergessenwerden) implementation
-- ✅ **Automatic data cleanup** based on retention policy
-- ✅ **Data minimization** principle
+### Production-Ready GDPR-Compliant Contact Form Backend
+
+A legally secure backend service for processing contact form submissions with **strict GDPR/DSGVO compliance**. Designed specifically for German market requirements.
+
+### ✨ Key Features
+
+- ✅ **Full GDPR/DSGVO compliance** with explicit user consent validation
+- ✅ **IP address anonymization** (last octet removal before storage)
+- ✅ **Right to be Forgotten** (Art. 17 GDPR) implementation
+- ✅ **Automated data retention** with configurable cleanup (6 months default)
+- ✅ **Data minimization** - only essential data stored
 - ✅ **SQL injection protection** via parameterized queries
-- ✅ **Admin-protected endpoints** for data deletion
-- ✅ **Comprehensive audit logging**
-- ✅ **Docker containerization** for easy deployment
-- ✅ **Health check endpoints** for monitoring
+- ✅ **Docker-ready** deployment with PostgreSQL
+- ✅ **Comprehensive API** documentation
 
-## 🇪🇺 DSGVO Compliance
+### 🛠 Tech Stack
 
-This service implements the following GDPR/DSGVO principles:
-
-### 1. **Lawfulness, Fairness and Transparency (Art. 5 Abs. 1 lit. a DSGVO)**
-- Explicit consent required via `consent_checkbox` field
-- Requests without consent are rejected with HTTP 400
-- Clear documentation of data processing
-
-### 2. **Purpose Limitation (Art. 5 Abs. 1 lit. b DSGVO)**
-- Data collected only for contact form purposes
-- No secondary use of collected data
-
-### 3. **Data Minimization (Art. 5 Abs. 1 lit. c DSGVO)**
-- Only essential fields stored: name, email, message, timestamp
-- IP addresses anonymized before storage
-- User agent limited to 500 characters
-
-### 4. **Accuracy (Art. 5 Abs. 1 lit. d DSGVO)**
-- Input validation ensures data quality
-- Email format validation
-- Sanitization of input data
-
-### 5. **Storage Limitation (Art. 5 Abs. 1 lit. e DSGVO)**
-- Automatic deletion of records older than 6 months (configurable)
-- Manual cleanup job available
-
-### 6. **Integrity and Confidentiality (Art. 5 Abs. 1 lit. f DSGVO)**
-- HTTPS required in production (configured via reverse proxy)
-- Helmet.js security headers
-- SQL injection protection
-- Admin endpoints protected with API key
-
-### 7. **Right to Erasure (Art. 17 DSGVO)**
-- Admin endpoint to delete all data for a specific email
-- Complete removal from database
-- Audit logging of deletions
-
-## 🛠 Tech Stack
-
-- **Backend:** TypeScript, Node.js, Express
+- **Backend:** TypeScript, Node.js, Express.js
 - **Database:** PostgreSQL 15
-- **Validation:** express-validator
-- **Security:** Helmet.js, CORS
-- **Containerization:** Docker, Docker Compose
-- **Runtime:** Node.js 20 LTS
+- **Security:** Helmet.js, express-validator, CORS
+- **Deployment:** Docker & Docker Compose
+- **Development:** ts-node-dev with hot reload
 
-## 📁 Project Structure
+### 🚀 Quick Start
 
-```
-DSGVO-Ready Contact Form Backend/
-├── src/
-│   ├── config/
-│   │   └── database.ts          # PostgreSQL connection pool
-│   ├── controllers/
-│   │   └── contact.controller.ts # Request handlers
-│   ├── middleware/
-│   │   └── validation.middleware.ts # Input validation & auth
-│   ├── models/
-│   │   └── contact.model.ts     # TypeScript interfaces
-│   ├── routes/
-│   │   └── contact.routes.ts    # API route definitions
-│   ├── services/
-│   │   └── contact.service.ts   # Business logic
-│   ├── utils/
-│   │   └── anonymization.utils.ts # IP anonymization
-│   ├── jobs/
-│   │   └── cleanup.job.ts       # Data retention job
-│   └── index.ts                 # Application entry point
-├── database/
-│   └── init.sql                 # Database schema
-├── Dockerfile                   # Production container
-├── docker-compose.yml           # Multi-container setup
-├── package.json
-├── tsconfig.json
-└── .env.example
-```
+#### Using Docker (Recommended)
 
-## 📦 Installation
-
-### Prerequisites
-
-- Node.js 20+
-- PostgreSQL 15+
-- Docker & Docker Compose (optional)
-
-### Local Development
-
-1. **Clone the repository**
 ```bash
-git clone <repository-url>
-cd "DSGVO-Ready Contact Form Backend"
-```
+# Clone repository
+git clone https://github.com/MrEpic256/DSGVO-Ready-Contact-Form-Backend.git
+cd DSGVO-Ready-Contact-Form-Backend
 
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Configure environment**
-```bash
+# Configure environment
 cp .env.example .env
-# Edit .env with your configuration
+# Edit .env with your settings
+
+# Start all services
+docker-compose up -d
+
+# Check logs
+docker-compose logs -f backend
 ```
 
-4. **Set up PostgreSQL database**
-```bash
-# Create database
-psql -U postgres -c "CREATE DATABASE dsgvo_contacts;"
+#### Local Development
 
-# Run initialization script
-psql -U postgres -d dsgvo_contacts -f database/init.sql
-```
-
-5. **Start development server**
 ```bash
+# Install dependencies
+npm install
+
+# Set up PostgreSQL database
+createdb dsgvo_contacts
+psql -d dsgvo_contacts -f database/init.sql
+
+# Configure environment
+cp .env.example .env
+
+# Start development server
 npm run dev
 ```
 
-The server will start at `http://localhost:3000`
+### 📡 API Endpoints
 
-## 🌐 API Endpoints
+#### Submit Contact Form
+```http
+POST /api/v1/contact/submit
+Content-Type: application/json
 
-### Public Endpoint
-
-#### **POST** `/api/v1/contact/submit`
-Submit a contact form with consent.
-
-**Request Body:**
-```json
 {
-  "name": "Max Mustermann",
-  "email": "max@example.de",
-  "message": "Ich möchte mehr Informationen über Ihre Dienstleistungen.",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "message": "Your message here",
   "consent_checkbox": true
 }
 ```
 
-**Success Response (201):**
+**Response 201 (Success):**
 ```json
 {
   "success": true,
@@ -178,103 +99,49 @@ Submit a contact form with consent.
 }
 ```
 
-**Error Response (400) - Missing Consent:**
-```json
-{
-  "success": false,
-  "error": "Validation failed",
-  "details": [
-    {
-      "field": "consent_checkbox",
-      "message": "Consent must be explicitly granted for DSGVO compliance"
-    }
-  ]
-}
+#### Admin Endpoints (require `x-admin-key` header)
+
+- **DELETE** `/api/v1/contact/delete/:email` - Delete user data (Right to be Forgotten)
+- **POST** `/api/v1/contact/cleanup` - Trigger manual cleanup of old records
+
+### 🔐 GDPR Compliance
+
+| GDPR Article | Implementation |
+|--------------|----------------|
+| Art. 6 (Consent) | Explicit consent required via `consent_checkbox` |
+| Art. 17 (Right to Erasure) | Admin endpoint for complete data deletion |
+| Art. 5 (Data Minimization) | Only name, email, message, timestamp stored |
+| Art. 5 (Storage Limitation) | Automatic deletion after 6 months |
+| Art. 32 (Security) | IP anonymization, parameterized queries, HTTPS support |
+
+**IP Anonymization:**
+- `192.168.1.123` → `192.168.1.0`
+- `2001:0db8:85a3::8a2e:0370:7334` → `2001:0db8:85a3::8a2e:0370:0`
+
+### 📊 Project Structure
+
+```
+dsgvo-contact-backend/
+├── src/
+│   ├── config/          # Database configuration
+│   ├── controllers/     # Request handlers
+│   ├── middleware/      # Validation & authentication
+│   ├── models/          # TypeScript interfaces
+│   ├── routes/          # API route definitions
+│   ├── services/        # Business logic layer
+│   ├── utils/           # Helper functions (IP anonymization)
+│   └── jobs/            # Scheduled jobs (cleanup)
+├── database/
+│   └── init.sql         # Database schema
+├── docker-compose.yml
+├── Dockerfile
+└── package.json
 ```
 
-### Admin Endpoints (Require `x-admin-key` header)
-
-#### **DELETE** `/api/v1/contact/delete/:email`
-Delete all submissions for a specific email (Right to be Forgotten).
-
-**Headers:**
-```
-x-admin-key: your_secure_admin_key
-```
-
-**Success Response (200):**
-```json
-{
-  "success": true,
-  "message": "All submissions deleted successfully (DSGVO compliance)",
-  "email": "max@example.de",
-  "deleted_count": 3
-}
-```
-
-#### **POST** `/api/v1/contact/cleanup`
-Manually trigger cleanup of records older than retention period.
-
-**Headers:**
-```
-x-admin-key: your_secure_admin_key
-```
-
-**Success Response (200):**
-```json
-{
-  "success": true,
-  "message": "Cleanup completed: 15 old record(s) deleted",
-  "retention_policy": "6 months",
-  "deleted_count": 15
-}
-```
-
-### Utility Endpoint
-
-#### **GET** `/health`
-Health check endpoint for monitoring.
-
-**Response (200):**
-```json
-{
-  "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00.000Z",
-  "service": "DSGVO Contact Form Backend"
-}
-```
-
-## ⚙️ Environment Variables
-
-Create a `.env` file based on `.env.example`:
-
-```env
-# Database Configuration
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=dsgvo_contacts
-DB_USER=postgres
-DB_PASSWORD=your_secure_password
-
-# Server Configuration
-PORT=3000
-NODE_ENV=development
-
-# Admin Access Key (CHANGE THIS!)
-ADMIN_API_KEY=your_secure_admin_key_here
-
-# Data Retention (in months)
-DATA_RETENTION_MONTHS=6
-```
-
-⚠️ **Security Note:** Always use strong, unique values for `DB_PASSWORD` and `ADMIN_API_KEY` in production!
-
-## 🐳 Docker Deployment
-
-### Quick Start with Docker Compose
+### 🐳 Docker Deployment
 
 ```bash
-# Build and start all services
+# Start services
 docker-compose up -d
 
 # View logs
@@ -284,174 +151,187 @@ docker-compose logs -f
 docker-compose down
 ```
 
-This will start:
-- PostgreSQL database on port 5432
-- Backend API on port 3000
-
-### Production Build
+### 🧪 Testing
 
 ```bash
-# Build production image
-docker build -t dsgvo-contact-backend .
+# Run automated tests
+.\test-api-simple.ps1
 
-# Run container
-docker run -d \
-  --name dsgvo-backend \
-  -p 3000:3000 \
-  --env-file .env \
-  dsgvo-contact-backend
-```
-
-## 📅 Data Retention Policy
-
-**Default Retention Period:** 6 months (configurable via `DATA_RETENTION_MONTHS`)
-
-### Automatic Cleanup
-
-Schedule the cleanup job using cron:
-
-```bash
-# Run cleanup job manually
-npm run cleanup
-
-# Example cron job (runs daily at 2 AM)
-0 2 * * * cd /path/to/project && npm run cleanup >> /var/log/dsgvo-cleanup.log 2>&1
-```
-
-### Manual Deletion (Right to be Forgotten)
-
-Users can request deletion of their data. Use the admin endpoint:
-
-```bash
-curl -X DELETE http://localhost:3000/api/v1/contact/delete/user@example.de \
-  -H "x-admin-key: your_admin_key"
-```
-
-## 🔐 Security Measures
-
-### Implemented Security Features
-
-1. **Input Validation**
-   - All fields validated and sanitized
-   - Email format verification
-   - Length restrictions enforced
-
-2. **SQL Injection Protection**
-   - Parameterized queries only
-   - No dynamic SQL construction
-
-3. **IP Anonymization**
-   - Last octet removed before storage
-   - Example: `192.168.1.123` → `192.168.1.0`
-   - Compliant with DSGVO requirements
-
-4. **Security Headers**
-   - Helmet.js middleware active
-   - XSS protection
-   - Content Security Policy
-
-5. **Admin Authentication**
-   - API key required for sensitive operations
-   - No public access to deletion endpoints
-
-6. **HTTPS in Production**
-   - Configure via reverse proxy (nginx, Apache)
-   - Example nginx configuration:
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name api.yourdomain.de;
-
-    ssl_certificate /path/to/cert.pem;
-    ssl_certificate_key /path/to/key.pem;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-## 📝 Testing the API
-
-### Using cURL
-
-```bash
-# Submit contact form
-curl -X POST http://localhost:3000/api/v1/contact/submit \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Max Mustermann",
-    "email": "max@example.de",
-    "message": "Test message",
-    "consent_checkbox": true
-  }'
-
-# Health check
+# Manual test
 curl http://localhost:3000/health
-
-# Delete user data (admin)
-curl -X DELETE http://localhost:3000/api/v1/contact/delete/max@example.de \
-  -H "x-admin-key: your_admin_key"
 ```
 
-### Using Postman
+### 📄 License
 
-Import the following collection:
+MIT License - See [LICENSE](LICENSE) file for details.
 
-**POST Submit Contact:**
-- URL: `http://localhost:3000/api/v1/contact/submit`
-- Method: POST
-- Headers: `Content-Type: application/json`
-- Body (raw JSON):
-```json
+---
+
+## 🇩🇪 Deutsch
+
+### Produktionsreifes DSGVO-konformes Kontaktformular-Backend
+
+Ein rechtssicherer Backend-Service zur Verarbeitung von Kontaktformular-Daten mit **strenger DSGVO-Konformität**. Speziell für die Anforderungen des deutschen Marktes entwickelt.
+
+### ✨ Hauptfunktionen
+
+- ✅ **Vollständige DSGVO-Konformität** mit expliziter Einwilligungsvalidierung
+- ✅ **IP-Adressen-Anonymisierung** (Entfernung des letzten Oktetts vor Speicherung)
+- ✅ **Recht auf Vergessenwerden** (Art. 17 DSGVO) implementiert
+- ✅ **Automatisierte Datenlöschung** mit konfigurierbarer Bereinigung (Standard: 6 Monate)
+- ✅ **Datenminimierung** - nur essenzielle Daten werden gespeichert
+- ✅ **SQL-Injection-Schutz** durch parametrisierte Abfragen
+- ✅ **Docker-ready** Deployment mit PostgreSQL
+- ✅ **Umfassende API**-Dokumentation
+
+### 🛠 Technologie-Stack
+
+- **Backend:** TypeScript, Node.js, Express.js
+- **Datenbank:** PostgreSQL 15
+- **Sicherheit:** Helmet.js, express-validator, CORS
+- **Deployment:** Docker & Docker Compose
+- **Entwicklung:** ts-node-dev mit Hot Reload
+
+### 🚀 Schnellstart
+
+#### Mit Docker (Empfohlen)
+
+```bash
+# Repository klonen
+git clone https://github.com/MrEpic256/DSGVO-Ready-Contact-Form-Backend.git
+cd DSGVO-Ready-Contact-Form-Backend
+
+# Umgebung konfigurieren
+cp .env.example .env
+# .env mit Ihren Einstellungen bearbeiten
+
+# Alle Services starten
+docker-compose up -d
+
+# Logs prüfen
+docker-compose logs -f backend
+```
+
+#### Lokale Entwicklung
+
+```bash
+# Abhängigkeiten installieren
+npm install
+
+# PostgreSQL-Datenbank einrichten
+createdb dsgvo_contacts
+psql -d dsgvo_contacts -f database/init.sql
+
+# Umgebung konfigurieren
+cp .env.example .env
+
+# Entwicklungsserver starten
+npm run dev
+```
+
+### 📡 API-Endpunkte
+
+#### Kontaktformular absenden
+```http
+POST /api/v1/contact/submit
+Content-Type: application/json
+
 {
-  "name": "Test User",
-  "email": "test@example.com",
-  "message": "This is a test message",
+  "name": "Max Mustermann",
+  "email": "max@beispiel.de",
+  "message": "Ihre Nachricht hier",
   "consent_checkbox": true
 }
 ```
 
-## 📊 Monitoring & Logging
-
-The service logs all important events:
-
-- Contact form submissions
-- DSGVO deletion requests
-- Automatic cleanup operations
-- Database errors
-- Authentication failures
-
-Example log output:
-```
-2024-01-15T10:30:00.123Z - POST /api/v1/contact/submit
-DSGVO deletion: Removed 3 record(s) for email: user@example.de
-Auto-cleanup: Removed 15 record(s) older than 6 months
+**Antwort 201 (Erfolg):**
+```json
+{
+  "success": true,
+  "message": "Contact form submitted successfully",
+  "data": {
+    "id": 1,
+    "submitted_at": "2024-01-15T10:30:00.000Z"
+  }
+}
 ```
 
-## 🤝 Contributing
+#### Admin-Endpunkte (erfordern `x-admin-key` Header)
 
-This is a demonstration project showcasing DSGVO compliance. Contributions are welcome!
+- **DELETE** `/api/v1/contact/delete/:email` - Benutzerdaten löschen (Recht auf Vergessenwerden)
+- **POST** `/api/v1/contact/cleanup` - Manuelle Bereinigung alter Datensätze auslösen
 
-## 📄 License
+### 🔐 DSGVO-Konformität
 
-MIT License - See LICENSE file for details
+| DSGVO-Artikel | Implementierung |
+|---------------|-----------------|
+| Art. 6 (Einwilligung) | Explizite Einwilligung über `consent_checkbox` erforderlich |
+| Art. 17 (Recht auf Löschung) | Admin-Endpunkt für vollständige Datenlöschung |
+| Art. 5 (Datenminimierung) | Nur Name, E-Mail, Nachricht, Zeitstempel gespeichert |
+| Art. 5 (Speicherbegrenzung) | Automatische Löschung nach 6 Monaten |
+| Art. 32 (Sicherheit) | IP-Anonymisierung, parametrisierte Abfragen, HTTPS-Unterstützung |
 
-## ⚖️ Legal Disclaimer
+**IP-Anonymisierung:**
+- `192.168.1.123` → `192.168.1.0`
+- `2001:0db8:85a3::8a2e:0370:7334` → `2001:0db8:85a3::8a2e:0370:0`
 
-This software is provided as-is for demonstration purposes. While it implements DSGVO-compliant practices, you should:
+### 📊 Projektstruktur
 
-1. Consult with a legal expert for DSGVO compliance in your specific use case
-2. Implement additional security measures as needed for your environment
-3. Maintain proper data processing agreements (AVV/DPA)
-4. Keep comprehensive records of processing activities (Art. 30 DSGVO)
-5. Conduct a Data Protection Impact Assessment (DSFA) if required
+```
+dsgvo-contact-backend/
+├── src/
+│   ├── config/          # Datenbank-Konfiguration
+│   ├── controllers/     # Request-Handler
+│   ├── middleware/      # Validierung & Authentifizierung
+│   ├── models/          # TypeScript-Interfaces
+│   ├── routes/          # API-Routen-Definitionen
+│   ├── services/        # Business-Logik-Schicht
+│   ├── utils/           # Hilfsfunktionen (IP-Anonymisierung)
+│   └── jobs/            # Geplante Jobs (Bereinigung)
+├── database/
+│   └── init.sql         # Datenbank-Schema
+├── docker-compose.yml
+├── Dockerfile
+└── package.json
+```
+
+### 🐳 Docker-Deployment
+
+```bash
+# Services starten
+docker-compose up -d
+
+# Logs anzeigen
+docker-compose logs -f
+
+# Services stoppen
+docker-compose down
+```
+
+### 🧪 Testen
+
+```bash
+# Automatisierte Tests ausführen
+.\test-api-simple.ps1
+
+# Manueller Test
+curl http://localhost:3000/health
+```
+
+### 📄 Lizenz
+
+MIT-Lizenz - Siehe [LICENSE](LICENSE)-Datei für Details.
 
 ---
 
-**Built with ❤️ for DSGVO compliance and data protection**
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Contact
+
+For questions about this project or freelance inquiries, please reach out via GitHub.
+
+---
+
+**Built with ❤️ for GDPR/DSGVO compliance and data protection**
