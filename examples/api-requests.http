@@ -1,0 +1,58 @@
+###
+# DSGVO Contact Form API - Example Requests
+# Use with REST Client extension in VS Code or similar tools
+###
+
+### Variables
+@baseUrl = http://localhost:3000
+@adminKey = your_secure_admin_key_here
+
+### Health Check
+GET {{baseUrl}}/health
+
+### Submit Contact Form (Valid)
+POST {{baseUrl}}/api/v1/contact/submit
+Content-Type: application/json
+
+{
+  "name": "Max Mustermann",
+  "email": "max.mustermann@example.de",
+  "message": "Ich interessiere mich für Ihre Dienstleistungen und würde gerne mehr Informationen erhalten.",
+  "consent_checkbox": true
+}
+
+### Submit Contact Form (Missing Consent - Should Fail)
+POST {{baseUrl}}/api/v1/contact/submit
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "message": "Test message without consent",
+  "consent_checkbox": false
+}
+
+### Submit Contact Form (Invalid Email - Should Fail)
+POST {{baseUrl}}/api/v1/contact/submit
+Content-Type: application/json
+
+{
+  "name": "Invalid User",
+  "email": "not-an-email",
+  "message": "Test message",
+  "consent_checkbox": true
+}
+
+### Delete User Data (Admin - Right to be Forgotten)
+DELETE {{baseUrl}}/api/v1/contact/delete/max.mustermann@example.de
+x-admin-key: {{adminKey}}
+
+### Delete User Data (No Admin Key - Should Fail)
+DELETE {{baseUrl}}/api/v1/contact/delete/test@example.com
+
+### Trigger Manual Cleanup (Admin)
+POST {{baseUrl}}/api/v1/contact/cleanup
+x-admin-key: {{adminKey}}
+
+### Trigger Manual Cleanup (No Admin Key - Should Fail)
+POST {{baseUrl}}/api/v1/contact/cleanup
